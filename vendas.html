@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vendas - Fábrica de Picolés</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-app">
+    <header class="topbar">
+      <div class="topbar-content">
+        <h1 class="topbar-title">🍦 Fábrica de Picolés</h1>
+        <div class="topbar-actions">
+          <span class="user-info" id="user-name">Usuário</span>
+          <a href="index.html" class="btn btn-logout">Sair</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <aside class="sidebar">
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">Dashboard</span>
+          </a>
+          <a href="cadastros.html" class="nav-item">
+            <span class="nav-icon">📝</span>
+            <span class="nav-text">Cadastros</span>
+          </a>
+          <a href="producao.html" class="nav-item">
+            <span class="nav-icon">🏭</span>
+            <span class="nav-text">Produção</span>
+          </a>
+          <a href="vendas.html" class="nav-item active">
+            <span class="nav-icon">💰</span>
+            <span class="nav-text">Vendas</span>
+          </a>
+          <a href="relatorios.html" class="nav-item">
+            <span class="nav-icon">📈</span>
+            <span class="nav-text">Relatórios</span>
+          </a>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="page-header">
+          <h2>Vendas</h2>
+          <p class="page-subtitle">
+            Emissão de notas fiscais e gerenciamento de vendas
+          </p>
+        </div>
+
+        <!-- Seção: Emitir Nota Fiscal -->
+        <section class="section">
+          <div class="card">
+            <h3>Emitir Nova Nota Fiscal</h3>
+            <form id="form-nota-fiscal">
+              <!-- Dados da Nota -->
+              <div class="form-section">
+                <h4>Dados da Nota Fiscal</h4>
+                <div class="grid-3">
+                  <div class="form-group">
+                    <label for="nota-numero-serie">Número de Série *</label>
+                    <input
+                      type="text"
+                      id="nota-numero-serie"
+                      name="numero_serie"
+                      required
+                      placeholder="000001"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="nota-data">Data de Emissão *</label>
+                    <input
+                      type="date"
+                      id="nota-data"
+                      name="data_emissao"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="nota-revendedor">Revendedor *</label>
+                    <select id="nota-revendedor" name="id_revendedor" required>
+                      <option value="">Selecione o revendedor</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="nota-descricao">Descrição / Observações</label>
+                  <textarea
+                    id="nota-descricao"
+                    name="descricao"
+                    rows="3"
+                    placeholder="Informações adicionais sobre a venda..."
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Itens da Nota (Lotes) -->
+              <div class="form-section">
+                <div class="section-header">
+                  <h4>Lotes Vendidos</h4>
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    id="btn-adicionar-lote"
+                  >
+                    ➕ Adicionar Lote
+                  </button>
+                </div>
+
+                <div id="lista-lotes-nota">
+                  <!-- Lotes serão adicionados aqui dinamicamente -->
+                </div>
+
+                <div class="valor-total-container">
+                  <div class="valor-total-label">Valor Total da Nota:</div>
+                  <div class="valor-total-valor">
+                    R$ <span id="nota-valor-total">0,00</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  id="btn-cancelar-nota"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Emitir Nota Fiscal
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Seção: Notas Fiscais Emitidas -->
+        <section class="section">
+          <div class="card">
+            <div class="card-header">
+              <h3>Notas Fiscais Emitidas</h3>
+              <div class="filter-group">
+                <input
+                  type="date"
+                  id="filter-data-inicio"
+                  placeholder="Data início"
+                />
+                <input
+                  type="date"
+                  id="filter-data-fim"
+                  placeholder="Data fim"
+                />
+                <select id="filter-revendedor">
+                  <option value="">Todos os revendedores</option>
+                </select>
+                <button class="btn btn-secondary btn-sm" id="btn-filtrar">
+                  Filtrar
+                </button>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Número Série</th>
+                    <th>Data Emissão</th>
+                    <th>Revendedor</th>
+                    <th>Valor Total</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="table-notas-fiscais">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted">
+                      Nenhuma nota fiscal emitida
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Template para Item de Lote -->
+    <template id="template-lote-item">
+      <div class="lote-item">
+        <div class="lote-item-content">
+          <div class="form-group">
+            <label>Lote *</label>
+            <select class="lote-select" required>
+              <option value="">Selecione o lote</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Quantidade *</label>
+            <input
+              type="number"
+              class="lote-quantidade"
+              min="1"
+              required
+              placeholder="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>Disponível</label>
+            <input
+              type="text"
+              class="lote-disponivel"
+              readonly
+              placeholder="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>Valor Unit.</label>
+            <input
+              type="text"
+              class="lote-valor-unit"
+              readonly
+              placeholder="R$ 0,00"
+            />
+          </div>
+          <div class="form-group">
+            <label>Subtotal</label>
+            <input
+              type="text"
+              class="lote-subtotal"
+              readonly
+              placeholder="R$ 0,00"
+            />
+          </div>
+        </div>
+        <button type="button" class="btn-remove-lote" title="Remover lote">
+          🗑️
+        </button>
+      </div>
+    </template>
+
+    <!-- Modal: Detalhes da Nota Fiscal -->
+    <div id="modal-detalhes-nota" class="modal">
+      <div class="modal-content modal-lg">
+        <div class="modal-header">
+          <h3>Detalhes da Nota Fiscal</h3>
+          <button class="modal-close" data-close="modal-detalhes-nota">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" id="modal-nota-body">
+          <!-- Conteúdo dinâmico -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-close="modal-detalhes-nota">
+            Fechar
+          </button>
+          <button class="btn btn-primary" id="btn-imprimir-nota">
+            Imprimir
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

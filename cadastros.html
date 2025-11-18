@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastros - Fábrica de Picolés</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-app">
+    <header class="topbar">
+      <div class="topbar-content">
+        <h1 class="topbar-title">🍦 Fábrica de Picolés</h1>
+        <div class="topbar-actions">
+          <span class="user-info" id="user-name">Usuário</span>
+          <a href="index.html" class="btn btn-logout">Sair</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <aside class="sidebar">
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">Dashboard</span>
+          </a>
+          <a href="cadastros.html" class="nav-item active">
+            <span class="nav-icon">📝</span>
+            <span class="nav-text">Cadastros</span>
+          </a>
+          <a href="producao.html" class="nav-item">
+            <span class="nav-icon">🏭</span>
+            <span class="nav-text">Produção</span>
+          </a>
+          <a href="vendas.html" class="nav-item">
+            <span class="nav-icon">💰</span>
+            <span class="nav-text">Vendas</span>
+          </a>
+          <a href="relatorios.html" class="nav-item">
+            <span class="nav-icon">📈</span>
+            <span class="nav-text">Relatórios</span>
+          </a>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="page-header">
+          <h2>Cadastros</h2>
+          <p class="page-subtitle">Gerenciamento de dados auxiliares</p>
+        </div>
+
+        <!-- Abas de Navegação -->
+        <div class="tabs">
+          <button class="tab-button active" data-tab="sabores">Sabores</button>
+          <button class="tab-button" data-tab="ingredientes">
+            Ingredientes
+          </button>
+          <button class="tab-button" data-tab="embalagens">Embalagens</button>
+          <button class="tab-button" data-tab="tipos">Tipos de Picolé</button>
+          <button class="tab-button" data-tab="aditivos">
+            Aditivos Nutritivos
+          </button>
+          <button class="tab-button" data-tab="conservantes">
+            Conservantes
+          </button>
+          <button class="tab-button" data-tab="revendedores">
+            Revendedores
+          </button>
+        </div>
+
+        <!-- Conteúdo das Abas -->
+
+        <!-- ABA: SABORES -->
+        <div id="tab-sabores" class="tab-content active">
+          <div class="grid-2">
+            <div class="card">
+              <h3>Cadastrar Sabor</h3>
+              <form id="form-sabor">
+                <div class="form-group">
+                  <label for="sabor-nome">Nome do Sabor *</label>
+                  <input
+                    type="text"
+                    id="sabor-nome"
+                    name="nome"
+                    required
+                    placeholder="Ex: Morango"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Salvar Sabor
+                </button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Sabores Cadastrados</h3>
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nome</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-sabores">
+                    <tr>
+                      <td colspan="3" class="text-center text-muted">
+                        Nenhum sabor cadastrado
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA: INGREDIENTES -->
+        <div id="tab-ingredientes" class="tab-content">
+          <div class="grid-2">
+            <div class="card">
+              <h3>Cadastrar Ingrediente</h3>
+              <form id="form-ingrediente">
+                <div class="form-group">
+                  <label for="ingrediente-nome">Nome do Ingrediente *</label>
+                  <input
+                    type="text"
+                    id="ingrediente-nome"
+                    name="nome"
+                    required
+                    placeholder="Ex: Leite Condensado"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Salvar Ingrediente
+                </button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Ingredientes Cadastrados</h3>
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nome</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-ingredientes">
+                    <tr>
+                      <td colspan="3" class="text-center text-muted">
+                        Nenhum ingrediente cadastrado
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA: EMBALAGENS -->
+        <div id="tab-embalagens" class="tab-content">
+          <div class="grid-2">
+            <div class="card">
+              <h3>Cadastrar Tipo de Embalagem</h3>
+              <form id="form-embalagem">
+                <div class="form-group">
+                  <label for="embalagem-nome">Nome da Embalagem *</label>
+                  <input
+                    type="text"
+                    id="embalagem-nome"
+                    name="nome"
+                    required
+                    placeholder="Ex: Plástico"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Salvar Embalagem
+                </button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Embalagens Cadastradas</h3>
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nome</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-embalagens">
+                    <tr>
+                      <td colspan="3" class="text-center text-muted">
+                        Nenhuma embalagem cadastrada
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA: TIPOS DE PICOLÉ -->
+        <div id="tab-tipos" class="tab-content">
+          <div class="grid-2">
+            <div class="card">
+              <h3>Cadastrar Tipo de Picolé</h3>
+              <form id="form-tipo">
+                <div class="form-group">
+                  <label for="tipo-nome">Nome do Tipo *</label>
+                  <input
+                    type="text"
+                    id="tipo-nome"
+                    name="nome"
+                    required
+                    placeholder="Ex: Normal"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="tipo-descricao">Descrição</label>
+                  <input
+                    type="text"
+                    id="tipo-descricao"
+                    name="descricao"
+                    placeholder="Ex: Picolé à base de água"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Salvar Tipo
+                </button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Tipos Cadastrados</h3>
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nome</th>
+                      <th>Descrição</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-tipos">
+                    <tr>
+                      <td colspan="4" class="text-center text-muted">
+                        Nenhum tipo cadastrado
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA: ADITIVOS NUTRITIVOS -->
+        <div id="tab-aditivos" class="tab-content">
+          <div class="grid-2">
+            <div class="card">
+              <h3>Cadastrar Aditivo Nutritivo</h3>
+              <form id="form-aditivo">
+                <div class="form-group">
+                  <label for="aditivo-nome">Nome do Aditivo *</label>
+                  <input
+                    type="text"
+                    id="aditivo-nome"
+                    name="nome"
+                    required
+                    placeholder="Ex: Vitamina C"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="aditivo-formula">Fórmula Química</label>
+                  <input
+                    type="text"
+                    id="aditivo-formula"
+                    name="formula_quimica"
+                    placeholder="Ex: C6H8O6"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Salvar Aditivo
+                </button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Aditivos Cadastrados</h3>
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nome</th>
+                      <th>Fórmula</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-aditivos">
+                    <tr>
+                      <td colspan="4" class="text-center text-muted">
+                        Nenhum aditivo cadastrado
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA: CONSERVANTES -->
+        <div id="tab-conservantes" class="tab-content">
+          <div class="grid-2">
+            <div class="card">
+              <h3>Cadastrar Conservante</h3>
+              <form id="form-conservante">
+                <div class="form-group">
+                  <label for="conservante-nome">Nome do Conservante *</label>
+                  <input
+                    type="text"
+                    id="conservante-nome"
+                    name="nome"
+                    required
+                    placeholder="Ex: Ácido Sórbico"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="conservante-descricao">Descrição</label>
+                  <textarea
+                    id="conservante-descricao"
+                    name="descricao"
+                    rows="3"
+                    placeholder="Informações sobre o conservante"
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Salvar Conservante
+                </button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Conservantes Cadastrados</h3>
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nome</th>
+                      <th>Descrição</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-conservantes">
+                    <tr>
+                      <td colspan="4" class="text-center text-muted">
+                        Nenhum conservante cadastrado
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA: REVENDEDORES -->
+        <div id="tab-revendedores" class="tab-content">
+          <div class="grid-2">
+            <div class="card">
+              <h3>Cadastrar Revendedor</h3>
+              <form id="form-revendedor">
+                <div class="form-group">
+                  <label for="revendedor-cnpj">CNPJ *</label>
+                  <input
+                    type="text"
+                    id="revendedor-cnpj"
+                    name="cnpj"
+                    required
+                    placeholder="00.000.000/0000-00"
+                    maxlength="18"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="revendedor-razao">Razão Social *</label>
+                  <input
+                    type="text"
+                    id="revendedor-razao"
+                    name="razao_social"
+                    required
+                    placeholder="Nome da Empresa LTDA"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="revendedor-contato">Contato *</label>
+                  <input
+                    type="text"
+                    id="revendedor-contato"
+                    name="contato"
+                    required
+                    placeholder="(00) 00000-0000"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="revendedor-email">E-mail</label>
+                  <input
+                    type="email"
+                    id="revendedor-email"
+                    name="email"
+                    placeholder="contato@empresa.com"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Salvar Revendedor
+                </button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Revendedores Cadastrados</h3>
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>CNPJ</th>
+                      <th>Razão Social</th>
+                      <th>Contato</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-revendedores">
+                    <tr>
+                      <td colspan="5" class="text-center text-muted">
+                        Nenhum revendedor cadastrado
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

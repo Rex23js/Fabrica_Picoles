@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Fábrica de Picolés</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-app">
+    <!-- Barra Superior -->
+    <header class="topbar">
+      <div class="topbar-content">
+        <h1 class="topbar-title">🍦 Fábrica de Picolés</h1>
+        <div class="topbar-actions">
+          <span class="user-info" id="user-name">Usuário</span>
+          <a href="index.html" class="btn btn-logout">Sair</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <!-- Menu Lateral -->
+      <aside class="sidebar">
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item active">
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">Dashboard</span>
+          </a>
+          <a href="cadastros.html" class="nav-item">
+            <span class="nav-icon">📝</span>
+            <span class="nav-text">Cadastros</span>
+          </a>
+          <a href="producao.html" class="nav-item">
+            <span class="nav-icon">🏭</span>
+            <span class="nav-text">Produção</span>
+          </a>
+          <a href="vendas.html" class="nav-item">
+            <span class="nav-icon">💰</span>
+            <span class="nav-text">Vendas</span>
+          </a>
+          <a href="relatorios.html" class="nav-item">
+            <span class="nav-icon">📈</span>
+            <span class="nav-text">Relatórios</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Conteúdo Principal -->
+      <main class="main-content">
+        <div class="page-header">
+          <h2>Dashboard</h2>
+          <p class="page-subtitle">Visão geral do sistema</p>
+        </div>
+
+        <!-- Cards de Resumo -->
+        <div class="dashboard-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">🍦</div>
+            <div class="stat-content">
+              <h3>Picolés Cadastrados</h3>
+              <p class="stat-value" id="total-picoles">0</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon green">📦</div>
+            <div class="stat-content">
+              <h3>Lotes Ativos</h3>
+              <p class="stat-value" id="total-lotes">0</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon orange">🏪</div>
+            <div class="stat-content">
+              <h3>Revendedores</h3>
+              <p class="stat-value" id="total-revendedores">0</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon purple">💵</div>
+            <div class="stat-content">
+              <h3>Vendas (Mês)</h3>
+              <p class="stat-value" id="total-vendas">R$ 0,00</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ações Rápidas -->
+        <div class="section">
+          <h3 class="section-title">Ações Rápidas</h3>
+          <div class="quick-actions">
+            <a href="producao.html" class="action-card">
+              <span class="action-icon">🍦</span>
+              <h4>Cadastrar Picolé</h4>
+              <p>Adicionar novo tipo de picolé</p>
+            </a>
+
+            <a href="producao.html#lotes" class="action-card">
+              <span class="action-icon">📦</span>
+              <h4>Criar Lote</h4>
+              <p>Registrar nova produção</p>
+            </a>
+
+            <a href="vendas.html" class="action-card">
+              <span class="action-icon">📄</span>
+              <h4>Emitir Nota Fiscal</h4>
+              <p>Nova venda para revendedor</p>
+            </a>
+
+            <a href="cadastros.html" class="action-card">
+              <span class="action-icon">➕</span>
+              <h4>Cadastros Gerais</h4>
+              <p>Sabores, ingredientes, etc.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Atividades Recentes -->
+        <div class="section">
+          <h3 class="section-title">Atividades Recentes</h3>
+          <div class="card">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Ação</th>
+                  <th>Descrição</th>
+                  <th>Usuário</th>
+                </tr>
+              </thead>
+              <tbody id="activities-table">
+                <tr>
+                  <td colspan="4" class="text-center text-muted">
+                    Nenhuma atividade registrada
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

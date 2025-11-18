@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Produção - Fábrica de Picolés</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-app">
+    <header class="topbar">
+      <div class="topbar-content">
+        <h1 class="topbar-title">🍦 Fábrica de Picolés</h1>
+        <div class="topbar-actions">
+          <span class="user-info" id="user-name">Usuário</span>
+          <a href="index.html" class="btn btn-logout">Sair</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <aside class="sidebar">
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">Dashboard</span>
+          </a>
+          <a href="cadastros.html" class="nav-item">
+            <span class="nav-icon">📝</span>
+            <span class="nav-text">Cadastros</span>
+          </a>
+          <a href="producao.html" class="nav-item active">
+            <span class="nav-icon">🏭</span>
+            <span class="nav-text">Produção</span>
+          </a>
+          <a href="vendas.html" class="nav-item">
+            <span class="nav-icon">💰</span>
+            <span class="nav-text">Vendas</span>
+          </a>
+          <a href="relatorios.html" class="nav-item">
+            <span class="nav-icon">📈</span>
+            <span class="nav-text">Relatórios</span>
+          </a>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="page-header">
+          <h2>Produção</h2>
+          <p class="page-subtitle">
+            Gerenciamento de picolés e lotes de produção
+          </p>
+        </div>
+
+        <!-- Seção: Cadastrar Picolé -->
+        <section class="section">
+          <div class="card">
+            <h3>Cadastrar Novo Picolé</h3>
+            <form id="form-picole">
+              <div class="grid-3">
+                <div class="form-group">
+                  <label for="picole-sabor">Sabor *</label>
+                  <select id="picole-sabor" name="id_sabor" required>
+                    <option value="">Selecione o sabor</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="picole-tipo">Tipo de Picolé *</label>
+                  <select id="picole-tipo" name="id_tipo_picole" required>
+                    <option value="">Selecione o tipo</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="picole-embalagem">Tipo de Embalagem *</label>
+                  <select
+                    id="picole-embalagem"
+                    name="id_tipo_embalagem"
+                    required
+                  >
+                    <option value="">Selecione a embalagem</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="picole-preco">Preço (R$) *</label>
+                <input
+                  type="number"
+                  id="picole-preco"
+                  name="preco"
+                  step="0.01"
+                  min="0.01"
+                  required
+                  placeholder="0.00"
+                />
+              </div>
+
+              <!-- Associações -->
+              <div class="form-section">
+                <h4>Ingredientes</h4>
+                <div class="checkbox-group" id="picole-ingredientes">
+                  <!-- Ingredientes serão carregados dinamicamente -->
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4>Aditivos Nutritivos</h4>
+                <div class="checkbox-group" id="picole-aditivos">
+                  <!-- Aditivos serão carregados dinamicamente -->
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4>Conservantes</h4>
+                <div class="checkbox-group" id="picole-conservantes">
+                  <!-- Conservantes serão carregados dinamicamente -->
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  id="btn-limpar-picole"
+                >
+                  Limpar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Salvar Picolé
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Seção: Picolés Cadastrados -->
+        <section class="section">
+          <div class="card">
+            <div class="card-header">
+              <h3>Picolés Cadastrados</h3>
+              <div class="search-box">
+                <input
+                  type="text"
+                  id="search-picole"
+                  placeholder="Buscar picolé..."
+                />
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Sabor</th>
+                    <th>Tipo</th>
+                    <th>Embalagem</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="table-picoles">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted">
+                      Nenhum picolé cadastrado
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Seção: Criar Lote -->
+        <section class="section" id="lotes">
+          <div class="card">
+            <h3>Criar Novo Lote de Produção</h3>
+            <form id="form-lote">
+              <div class="grid-2">
+                <div class="form-group">
+                  <label for="lote-picole">Tipo de Picolé *</label>
+                  <select id="lote-picole" name="id_tipo_picole" required>
+                    <option value="">Selecione o tipo de picolé</option>
+                  </select>
+                  <small class="form-hint"
+                    >Selecione o tipo (Normal, ao Leite, etc.)</small
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="lote-quantidade">Quantidade *</label>
+                  <input
+                    type="number"
+                    id="lote-quantidade"
+                    name="quantidade"
+                    min="1"
+                    required
+                    placeholder="1000"
+                  />
+                  <small class="form-hint"
+                    >Quantidade de picolés produzidos</small
+                  >
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  id="btn-limpar-lote"
+                >
+                  Limpar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Criar Lote
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Seção: Lotes de Produção -->
+        <section class="section">
+          <div class="card">
+            <div class="card-header">
+              <h3>Lotes de Produção</h3>
+              <div class="filter-group">
+                <select id="filter-tipo-lote">
+                  <option value="">Todos os tipos</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tipo de Picolé</th>
+                    <th>Quantidade</th>
+                    <th>Disponível</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="table-lotes">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted">
+                      Nenhum lote cadastrado
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Modal: Detalhes do Picolé -->
+    <div id="modal-detalhes-picole" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Detalhes do Picolé</h3>
+          <button class="modal-close" data-close="modal-detalhes-picole">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" id="modal-picole-body">
+          <!-- Conteúdo dinâmico -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

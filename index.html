@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fábrica de Picolés - Login</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-auth">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="logo">
+          <h1>🍦 Fábrica de Picolés</h1>
+          <p class="tagline">Sistema de Gerenciamento</p>
+        </div>
+
+        <div class="auth-tabs">
+          <button class="tab-btn active" data-tab="login">Entrar</button>
+          <button class="tab-btn" data-tab="register">Registrar</button>
+        </div>
+
+        <!-- Formulário de Login -->
+        <form id="form-login" class="auth-form active">
+          <div class="form-group">
+            <label for="login-email">E-mail</label>
+            <input
+              type="email"
+              id="login-email"
+              name="email"
+              required
+              placeholder="seu@email.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="login-password">Senha</label>
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              minlength="6"
+              required
+              placeholder="••••••"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            Entrar
+          </button>
+
+          <div id="login-message" class="message" role="alert"></div>
+        </form>
+
+        <!-- Formulário de Registro -->
+        <form id="form-register" class="auth-form">
+          <div class="form-group">
+            <label for="reg-name">Nome Completo</label>
+            <input
+              type="text"
+              id="reg-name"
+              name="name"
+              required
+              placeholder="João Silva"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="reg-email">E-mail</label>
+            <input
+              type="email"
+              id="reg-email"
+              name="email"
+              required
+              placeholder="seu@email.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="reg-password">Senha</label>
+            <input
+              type="password"
+              id="reg-password"
+              name="password"
+              minlength="6"
+              required
+              placeholder="Mínimo 6 caracteres"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="reg-role">Área de Atuação</label>
+            <select id="reg-role" name="role" required>
+              <option value="">Selecione...</option>
+              <option value="producao">Produção</option>
+              <option value="vendas">Vendas</option>
+              <option value="estoque">Estoque</option>
+              <option value="admin">Administração</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            Criar Conta
+          </button>
+
+          <div id="register-message" class="message" role="alert"></div>
+        </form>
+      </div>
+
+      <footer class="auth-footer">
+        <p>&copy; 2025 Fábrica de Picolés. Todos os direitos reservados.</p>
+      </footer>
+    </div>
+  </body>
+</html>
