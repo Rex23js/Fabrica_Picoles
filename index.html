@@ -10,16 +10,11 @@
     <div class="auth-container">
       <div class="auth-card">
         <div class="logo">
-          <h1>🍦 Fábrica de Picolés</h1>
+          <h1>🦴 Fábrica de Picolés</h1>
           <p class="tagline">Sistema de Gerenciamento</p>
         </div>
 
-        <div class="auth-tabs">
-          <button class="tab-btn active" data-tab="login">Entrar</button>
-          <button class="tab-btn" data-tab="register">Registrar</button>
-        </div>
-
-        <!-- Formulário de Login -->
+        <!-- Formulário de login -->
         <form id="form-login" class="auth-form active">
           <div class="form-group">
             <label for="login-email">E-mail</label>
@@ -31,84 +26,152 @@
               placeholder="seu@email.com"
             />
           </div>
-
           <div class="form-group">
             <label for="login-password">Senha</label>
             <input
               type="password"
               id="login-password"
               name="password"
-              minlength="6"
               required
-              placeholder="••••••"
+              placeholder="Digite sua senha"
             />
           </div>
-
           <button type="submit" class="btn btn-primary btn-block">
-            Entrar
+            Acessar Sistema
           </button>
-
-          <div id="login-message" class="message" role="alert"></div>
         </form>
 
-        <!-- Formulário de Registro -->
-        <form id="form-register" class="auth-form">
-          <div class="form-group">
-            <label for="reg-name">Nome Completo</label>
-            <input
-              type="text"
-              id="reg-name"
-              name="name"
-              required
-              placeholder="João Silva"
-            />
+        <!-- Painel de Credenciais Atualizado -->
+        <div
+          style="
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+          "
+        >
+          <p
+            style="
+              margin: 0 0 12px 0;
+              font-size: 1rem;
+              color: #1e40af;
+              font-weight: 600;
+            "
+          >
+            📋 Usuários de Acesso
+          </p>
+          <div style="font-size: 0.9rem; color: #1e40af; line-height: 1.8">
+            <div style="margin-bottom: 8px">
+              <strong>🔑 Administrador:</strong><br />
+              <span style="margin-left: 24px"
+                >Email:
+                <code
+                  style="
+                    background: #e0e7ff;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                  "
+                  >admin@picoles.com</code
+                ></span
+              ><br />
+              <span style="margin-left: 24px"
+                >Senha:
+                <code
+                  style="
+                    background: #e0e7ff;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                  "
+                  >Picole@2025</code
+                ></span
+              >
+            </div>
+
+            <div style="margin-bottom: 8px">
+              <strong>🏭 Produção:</strong><br />
+              <span style="margin-left: 24px"
+                >Email:
+                <code
+                  style="
+                    background: #e0e7ff;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                  "
+                  >joao@picoles.com</code
+                ></span
+              ><br />
+              <span style="margin-left: 24px"
+                >Senha:
+                <code
+                  style="
+                    background: #e0e7ff;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                  "
+                  >Picole@2025</code
+                ></span
+              >
+            </div>
+
+            <div style="margin-bottom: 8px">
+              <strong>💰 Vendas:</strong><br />
+              <span style="margin-left: 24px"
+                >Email:
+                <code
+                  style="
+                    background: #e0e7ff;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                  "
+                  >maria@picoles.com</code
+                ></span
+              ><br />
+              <span style="margin-left: 24px"
+                >Senha:
+                <code
+                  style="
+                    background: #e0e7ff;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                  "
+                  >Picole@2025</code
+                ></span
+              >
+            </div>
+
+            <div>
+              <strong>📊 Relatórios:</strong><br />
+              <span style="margin-left: 24px"
+                >Email:
+                <code
+                  style="
+                    background: #e0e7ff;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                  "
+                  >carlos@picoles.com</code
+                ></span
+              ><br />
+              <span style="margin-left: 24px"
+                >Senha:
+                <code
+                  style="
+                    background: #e0e7ff;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                  "
+                  >Picole@2025</code
+                ></span
+              >
+            </div>
           </div>
-
-          <div class="form-group">
-            <label for="reg-email">E-mail</label>
-            <input
-              type="email"
-              id="reg-email"
-              name="email"
-              required
-              placeholder="seu@email.com"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="reg-password">Senha</label>
-            <input
-              type="password"
-              id="reg-password"
-              name="password"
-              minlength="6"
-              required
-              placeholder="Mínimo 6 caracteres"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="reg-role">Área de Atuação</label>
-            <select id="reg-role" name="role" required>
-              <option value="">Selecione...</option>
-              <option value="producao">Produção</option>
-              <option value="vendas">Vendas</option>
-              <option value="estoque">Estoque</option>
-              <option value="admin">Administração</option>
-            </select>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-block">
-            Criar Conta
-          </button>
-
-          <div id="register-message" class="message" role="alert"></div>
-        </form>
+        </div>
       </div>
-
       <footer class="auth-footer">
-        <p>&copy; 2025 Fábrica de Picolés. Todos os direitos reservados.</p>
+        <p>&copy; 2025 Fábrica de Picolés</p>
       </footer>
     </div>
+    <script src="app.js"></script>
   </body>
 </html>

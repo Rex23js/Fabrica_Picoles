@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerenciar Usuários - Fábrica de Picolés</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-app">
+    <header class="topbar">
+      <div class="topbar-content">
+        <h1 class="topbar-title">🍦 Fábrica de Picolés</h1>
+        <div class="topbar-actions">
+          <span class="user-info" id="user-name">Usuário</span>
+          <a href="index.html" class="btn btn-logout">Sair</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <aside class="sidebar">
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">Dashboard</span>
+          </a>
+          <a href="cadastros.html" class="nav-item">
+            <span class="nav-icon">📝</span>
+            <span class="nav-text">Cadastros</span>
+          </a>
+          <a href="producao.html" class="nav-item">
+            <span class="nav-icon">🏭</span>
+            <span class="nav-text">Produção</span>
+          </a>
+          <a href="vendas.html" class="nav-item">
+            <span class="nav-icon">💰</span>
+            <span class="nav-text">Vendas</span>
+          </a>
+          <a href="relatorios.html" class="nav-item">
+            <span class="nav-icon">📈</span>
+            <span class="nav-text">Relatórios</span>
+          </a>
+          <a href="usuarios.html" class="nav-item active" id="nav-usuarios">
+            <span class="nav-icon">👥</span>
+            <span class="nav-text">Usuários</span>
+          </a>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="page-header">
+          <h2>⚙️ Gerenciamento de Usuários</h2>
+          <p class="page-subtitle">
+            Controle de acesso e permissões (Somente Admin)
+          </p>
+        </div>
+
+        <!-- Criar novo usuário -->
+        <section class="section">
+          <div class="card">
+            <h3>➕ Cadastrar Novo Usuário</h3>
+            <form id="form-criar-usuario">
+              <div class="grid-2">
+                <div class="form-group">
+                  <label for="user-name">Nome Completo *</label>
+                  <input
+                    type="text"
+                    id="user-name"
+                    name="name"
+                    required
+                    placeholder="Ex: Roberto Silva"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="user-email">E-mail *</label>
+                  <input
+                    type="email"
+                    id="user-email"
+                    name="email"
+                    required
+                    placeholder="roberto@picoles.com"
+                  />
+                </div>
+              </div>
+
+              <div class="grid-2">
+                <div class="form-group">
+                  <label for="user-password">Senha *</label>
+                  <input
+                    type="password"
+                    id="user-password"
+                    name="password"
+                    minlength="6"
+                    required
+                    placeholder="Mínimo 6 caracteres"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="user-role">Perfil de Acesso *</label>
+                  <select id="user-role" name="role" required>
+                    <option value="">Selecione o perfil...</option>
+                    <option value="admin">
+                      🔑 Administrador (Acesso Total)
+                    </option>
+                    <option value="producao">
+                      🏭 Produção (Cadastros + Produção)
+                    </option>
+                    <option value="vendas">
+                      💰 Vendas (Dashboard + Vendas)
+                    </option>
+                    <option value="relatorios">
+                      📊 Relatórios (Dashboard + Relatórios)
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4>📋 Áreas de Acesso</h4>
+                <p
+                  style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem"
+                >
+                  As permissões abaixo são pré-definidas pelo perfil
+                  selecionado, mas você pode personalizá-las:
+                </p>
+                <div
+                  class="checkbox-group"
+                  style="
+                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                  "
+                >
+                  <div class="checkbox-item">
+                    <input
+                      type="checkbox"
+                      id="perm-dashboard"
+                      name="areas[]"
+                      value="dashboard"
+                      checked
+                    />
+                    <label for="perm-dashboard">📊 Dashboard</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input
+                      type="checkbox"
+                      id="perm-cadastros"
+                      name="areas[]"
+                      value="cadastros"
+                    />
+                    <label for="perm-cadastros">📝 Cadastros</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input
+                      type="checkbox"
+                      id="perm-producao"
+                      name="areas[]"
+                      value="producao"
+                    />
+                    <label for="perm-producao">🏭 Produção</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input
+                      type="checkbox"
+                      id="perm-vendas"
+                      name="areas[]"
+                      value="vendas"
+                    />
+                    <label for="perm-vendas">💰 Vendas</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input
+                      type="checkbox"
+                      id="perm-relatorios"
+                      name="areas[]"
+                      value="relatorios"
+                    />
+                    <label for="perm-relatorios">📈 Relatórios</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onclick="document.getElementById('form-criar-usuario').reset()"
+                >
+                  Limpar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  ✅ Criar Usuário
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Lista de usuários -->
+        <section class="section">
+          <div class="card">
+            <div class="card-header">
+              <h3>👥 Usuários Cadastrados</h3>
+              <button
+                class="btn btn-secondary btn-sm"
+                onclick="carregarUsuarios()"
+              >
+                🔄 Atualizar
+              </button>
+            </div>
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Perfil</th>
+                    <th>Áreas de Acesso</th>
+                    <th>Criado em</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="table-usuarios">
+                  <tr>
+                    <td colspan="7" class="text-center text-muted">
+                      Carregando usuários...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      // Verificar se é admin
+      const permissions = JSON.parse(
+        localStorage.getItem("userPermissions") || "[]"
+      );
+      if (!permissions.includes("admin")) {
+        alert("⛔ Acesso negado! Esta página é restrita a administradores.");
+        window.location.href = "dashboard.html";
+      }
+
+      // Pré-selecionar permissões baseado no perfil
+      document
+        .getElementById("user-role")
+        .addEventListener("change", function () {
+          const checkboxes = {
+            dashboard: document.getElementById("perm-dashboard"),
+            cadastros: document.getElementById("perm-cadastros"),
+            producao: document.getElementById("perm-producao"),
+            vendas: document.getElementById("perm-vendas"),
+            relatorios: document.getElementById("perm-relatorios"),
+          };
+
+          // Desmarcar todos
+          Object.values(checkboxes).forEach((cb) => (cb.checked = false));
+
+          // Marcar baseado no perfil
+          switch (this.value) {
+            case "admin":
+              Object.values(checkboxes).forEach((cb) => (cb.checked = true));
+              break;
+            case "producao":
+              checkboxes.dashboard.checked = true;
+              checkboxes.cadastros.checked = true;
+              checkboxes.producao.checked = true;
+              break;
+            case "vendas":
+              checkboxes.dashboard.checked = true;
+              checkboxes.vendas.checked = true;
+              break;
+            case "relatorios":
+              checkboxes.dashboard.checked = true;
+              checkboxes.relatorios.checked = true;
+              break;
+          }
+        });
+
+      // Criar usuário
+      document
+        .getElementById("form-criar-usuario")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+
+          const areas = [];
+          document
+            .querySelectorAll('input[name="areas[]"]:checked')
+            .forEach((cb) => {
+              areas.push(cb.value);
+            });
+
+          const data = {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            password: formData.get("password"),
+            role: formData.get("role"),
+            areas: areas,
+          };
+
+          try {
+            const response = await fetch("./auth.php?action=register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+            const result = await response.json();
+
+            if (result.success) {
+              alert("✅ " + result.message);
+              e.target.reset();
+              carregarUsuarios();
+            } else {
+              alert("❌ " + result.message);
+            }
+          } catch (error) {
+            console.error("Erro:", error);
+            alert("❌ Erro ao criar usuário.");
+          }
+        });
+
+      // Carregar usuários
+      async function carregarUsuarios() {
+        try {
+          const response = await fetch("./auth.php?action=listar-usuarios");
+          const usuarios = await response.json();
+
+          const tbody = document.getElementById("table-usuarios");
+          if (usuarios.length === 0) {
+            tbody.innerHTML =
+              '<tr><td colspan="7" class="text-center text-muted">Nenhum usuário cadastrado</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = usuarios
+            .map((user) => {
+              const areas = JSON.parse(user.areas_allowed || "[]");
+              const badges = areas
+                .map((a) => {
+                  const icons = {
+                    admin: "🔑",
+                    dashboard: "📊",
+                    cadastros: "📝",
+                    producao: "🏭",
+                    vendas: "💰",
+                    relatorios: "📈",
+                  };
+                  return `<span style="background: #e0e7ff; color: #4338ca; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; margin-right: 4px;">${
+                    icons[a] || ""
+                  } ${a}</span>`;
+                })
+                .join("");
+
+              return `
+              <tr>
+                <td>${user.id}</td>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td><strong>${user.role_name}</strong></td>
+                <td>${badges}</td>
+                <td>${new Date(user.created_at).toLocaleDateString(
+                  "pt-BR"
+                )}</td>
+                <td>
+                  <button class="btn btn-danger btn-sm" onclick="deletarUsuario(${
+                    user.id
+                  })" ${user.id === 1 ? "disabled" : ""}>
+                    🗑️
+                  </button>
+                </td>
+              </tr>
+            `;
+            })
+            .join("");
+        } catch (error) {
+          console.error("Erro:", error);
+          document.getElementById("table-usuarios").innerHTML =
+            '<tr><td colspan="7" class="text-center" style="color: #ef4444;">❌ Erro ao carregar usuários</td></tr>';
+        }
+      }
+
+      // Deletar usuário
+      async function deletarUsuario(id) {
+        if (id === 1) {
+          alert("⛔ O usuário administrador principal não pode ser excluído!");
+          return;
+        }
+
+        if (!confirm("Tem certeza que deseja excluir este usuário?")) {
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `./auth.php?action=deletar-usuario&id=${id}`,
+            {
+              method: "DELETE",
+            }
+          );
+          const result = await response.json();
+
+          if (result.success) {
+            alert("✅ " + result.message);
+            carregarUsuarios();
+          } else {
+            alert("❌ " + result.message);
+          }
+        } catch (error) {
+          console.error("Erro:", error);
+          alert("❌ Erro ao excluir usuário.");
+        }
+      }
+
+      // Carregar ao iniciar
+      carregarUsuarios();
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>

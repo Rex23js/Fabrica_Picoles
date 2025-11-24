@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="page-app">
-    <!-- Barra Superior -->
     <header class="topbar">
       <div class="topbar-content">
         <h1 class="topbar-title">🍦 Fábrica de Picolés</h1>
@@ -19,7 +18,6 @@
     </header>
 
     <div class="app-layout">
-      <!-- Menu Lateral -->
       <aside class="sidebar">
         <nav class="sidebar-nav">
           <a href="dashboard.html" class="nav-item active">
@@ -42,14 +40,41 @@
             <span class="nav-icon">📈</span>
             <span class="nav-text">Relatórios</span>
           </a>
+          <a
+            href="usuarios.html"
+            class="nav-item"
+            id="nav-usuarios"
+            style="display: none"
+          >
+            <span class="nav-icon">👥</span>
+            <span class="nav-text">Usuários</span>
+          </a>
         </nav>
       </aside>
 
-      <!-- Conteúdo Principal -->
       <main class="main-content">
         <div class="page-header">
           <h2>Dashboard</h2>
           <p class="page-subtitle">Visão geral do sistema</p>
+        </div>
+
+        <!-- Informação de Boas-vindas Personalizada -->
+        <div
+          style="
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+          "
+        >
+          <h3 style="margin: 0 0 8px 0; font-size: 1.5rem">
+            👋 Bem-vindo, <span id="welcome-user">Usuário</span>!
+          </h3>
+          <p style="margin: 0; opacity: 0.9" id="welcome-message">
+            Você está acessando o sistema como
+            <strong id="user-role-display">usuário</strong>.
+          </p>
         </div>
 
         <!-- Cards de Resumo -->
@@ -89,58 +114,162 @@
 
         <!-- Ações Rápidas -->
         <div class="section">
-          <h3 class="section-title">Ações Rápidas</h3>
-          <div class="quick-actions">
+          <h3 class="section-title">⚡ Ações Rápidas</h3>
+          <div class="quick-actions" id="quick-actions-grid">
+            <!-- Ações serão carregadas dinamicamente baseado nas permissões -->
+          </div>
+        </div>
+
+        <!-- Informações do Sistema -->
+        <div class="section">
+          <h3 class="section-title">ℹ️ Informações do Sistema</h3>
+          <div class="card">
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 16px;
+              "
+            >
+              <div>
+                <strong style="color: #64748b">Seu Perfil:</strong>
+                <p style="margin: 4px 0 0 0; font-size: 1.1rem" id="info-role">
+                  -
+                </p>
+              </div>
+              <div>
+                <strong style="color: #64748b">Áreas de Acesso:</strong>
+                <div id="info-permissions" style="margin-top: 4px">-</div>
+              </div>
+              <div>
+                <strong style="color: #64748b">Último Acesso:</strong>
+                <p
+                  style="margin: 4px 0 0 0; font-size: 1.1rem"
+                  id="info-last-access"
+                >
+                  Agora
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // Carregar informações do usuário
+      document.addEventListener("DOMContentLoaded", () => {
+        const permissions = JSON.parse(
+          localStorage.getItem("userPermissions") || "[]"
+        );
+        const userName = localStorage.getItem("userName") || "Usuário";
+
+        // Atualizar boas-vindas
+        document.getElementById("welcome-user").textContent = userName;
+
+        // Mostrar botão de usuários se for admin
+        if (permissions.includes("admin")) {
+          document.getElementById("nav-usuarios").style.display = "flex";
+          document.getElementById("user-role-display").textContent =
+            "Administrador";
+          document.getElementById("info-role").textContent = "🔑 Administrador";
+        } else if (permissions.includes("producao")) {
+          document.getElementById("user-role-display").textContent =
+            "Equipe de Produção";
+          document.getElementById("info-role").textContent = "🏭 Produção";
+        } else if (permissions.includes("vendas")) {
+          document.getElementById("user-role-display").textContent =
+            "Equipe de Vendas";
+          document.getElementById("info-role").textContent = "💰 Vendas";
+        } else {
+          document.getElementById("user-role-display").textContent = "usuário";
+          document.getElementById("info-role").textContent =
+            "👤 Usuário Padrão";
+        }
+
+        // Mostrar permissões
+        const permissionBadges = permissions
+          .map((p) => {
+            const icons = {
+              admin: "🔑",
+              dashboard: "📊",
+              cadastros: "📝",
+              producao: "🏭",
+              vendas: "💰",
+              relatorios: "📈",
+            };
+            return `<span style="background: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 6px; font-size: 0.9rem; margin-right: 8px; display: inline-block; margin-bottom: 4px;">${
+              icons[p] || ""
+            } ${p}</span>`;
+          })
+          .join("");
+        document.getElementById("info-permissions").innerHTML =
+          permissionBadges;
+
+        // Carregar ações rápidas baseado nas permissões
+        const quickActionsGrid = document.getElementById("quick-actions-grid");
+        let actions = "";
+
+        if (permissions.includes("producao")) {
+          actions += `
             <a href="producao.html" class="action-card">
               <span class="action-icon">🍦</span>
               <h4>Cadastrar Picolé</h4>
               <p>Adicionar novo tipo de picolé</p>
             </a>
-
             <a href="producao.html#lotes" class="action-card">
               <span class="action-icon">📦</span>
               <h4>Criar Lote</h4>
               <p>Registrar nova produção</p>
             </a>
+          `;
+        }
 
+        if (permissions.includes("vendas")) {
+          actions += `
             <a href="vendas.html" class="action-card">
               <span class="action-icon">📄</span>
               <h4>Emitir Nota Fiscal</h4>
               <p>Nova venda para revendedor</p>
             </a>
+          `;
+        }
 
+        if (permissions.includes("cadastros")) {
+          actions += `
             <a href="cadastros.html" class="action-card">
               <span class="action-icon">➕</span>
               <h4>Cadastros Gerais</h4>
               <p>Sabores, ingredientes, etc.</p>
             </a>
-          </div>
-        </div>
+          `;
+        }
 
-        <!-- Atividades Recentes -->
-        <div class="section">
-          <h3 class="section-title">Atividades Recentes</h3>
-          <div class="card">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Data</th>
-                  <th>Ação</th>
-                  <th>Descrição</th>
-                  <th>Usuário</th>
-                </tr>
-              </thead>
-              <tbody id="activities-table">
-                <tr>
-                  <td colspan="4" class="text-center text-muted">
-                    Nenhuma atividade registrada
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </main>
-    </div>
+        if (permissions.includes("relatorios")) {
+          actions += `
+            <a href="relatorios.html" class="action-card">
+              <span class="action-icon">📊</span>
+              <h4>Ver Relatórios</h4>
+              <p>Análises e estatísticas</p>
+            </a>
+          `;
+        }
+
+        if (permissions.includes("admin")) {
+          actions += `
+            <a href="usuarios.html" class="action-card">
+              <span class="action-icon">👥</span>
+              <h4>Gerenciar Usuários</h4>
+              <p>Criar e editar acessos</p>
+            </a>
+          `;
+        }
+
+        quickActionsGrid.innerHTML =
+          actions ||
+          '<p style="color: #94a3b8;">Você não tem ações rápidas disponíveis.</p>';
+      });
+    </script>
+    <script src="app.js"></script>
   </body>
 </html>

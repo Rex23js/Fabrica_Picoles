@@ -215,14 +215,15 @@
               <h3>Cadastrar Tipo de Picolé</h3>
               <form id="form-tipo">
                 <div class="form-group">
-                  <label for="tipo-nome">Nome do Tipo *</label>
-                  <input
-                    type="text"
-                    id="tipo-nome"
-                    name="nome"
-                    required
-                    placeholder="Ex: Normal"
-                  />
+                  <label for="tipo-nome">Tipo de Picolé *</label>
+                  <select id="tipo-nome" name="nome" required>
+                    <option value="">Selecione o tipo...</option>
+                    <option value="Normal">Normal (à base de água)</option>
+                    <option value="Ao Leite">Ao Leite (cremoso)</option>
+                  </select>
+                  <small class="form-hint"
+                    >⚠️ Apenas estes dois tipos são permitidos</small
+                  >
                 </div>
                 <div class="form-group">
                   <label for="tipo-descricao">Descrição</label>
@@ -455,5 +456,6 @@
         </div>
       </main>
     </div>
+    <script src="app.js"></script>
   </body>
 </html>

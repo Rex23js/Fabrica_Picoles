@@ -172,18 +172,20 @@
         </section>
 
         <!-- Seção: Criar Lote -->
+        <!-- SUBSTITUIR seção de criação de lote (linha ~145): -->
         <section class="section" id="lotes">
           <div class="card">
             <h3>Criar Novo Lote de Produção</h3>
             <form id="form-lote">
               <div class="grid-2">
+                <!-- MUDANÇA: Selecionar picolé específico ao invés de tipo -->
                 <div class="form-group">
-                  <label for="lote-picole">Tipo de Picolé *</label>
-                  <select id="lote-picole" name="id_tipo_picole" required>
-                    <option value="">Selecione o tipo de picolé</option>
+                  <label for="lote-picole">Picolé *</label>
+                  <select id="lote-picole" name="id_picole" required>
+                    <option value="">Selecione o picolé</option>
                   </select>
                   <small class="form-hint"
-                    >Selecione o tipo (Normal, ao Leite, etc.)</small
+                    >Escolha o picolé específico (sabor + tipo)</small
                   >
                 </div>
 
@@ -218,7 +220,6 @@
             </form>
           </div>
         </section>
-
         <!-- Seção: Lotes de Produção -->
         <section class="section">
           <div class="card">
@@ -270,5 +271,7 @@
         </div>
       </div>
     </div>
+    <script src="app.js"></script>
+    <script src="producao.js"></script>
   </body>
 </html>
