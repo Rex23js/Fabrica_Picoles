@@ -1,5 +1,5 @@
 <?php
-// api_producao.php - API para Gerenciamento de Produção
+// api_producao.php - API para Gerenciamento de Produção CORRIGIDA
 header('Content-Type: application/json');
 require 'db.php';
 session_start();
@@ -118,10 +118,8 @@ elseif ($action === 'deletar-picole') {
 // ====================================
 // CRIAR LOTE
 // ====================================
-// SUBSTITUIR bloco 'criar-lote' (linha ~93):
 elseif ($action === 'criar-lote') {
     try {
-        // MUDANÇA: Receber id_picole direto ao invés de id_tipo_picole
         if (!isset($input['id_picole']) || !isset($input['quantidade'])) {
             echo json_encode(['success' => false, 'message' => 'Picolé e quantidade são obrigatórios']);
             exit;
@@ -169,6 +167,7 @@ elseif ($action === 'criar-lote') {
         echo json_encode(['success' => false, 'message' => 'Erro: ' . $e->getMessage()]);
     }
 }
+
 // ====================================
 // LISTAR LOTES
 // ====================================
@@ -196,7 +195,7 @@ elseif ($action === 'listar-lotes') {
 }
 
 // ====================================
-// LISTAR LOTES ATIVOS (PARA VENDAS)
+// LISTAR LOTES ATIVOS (PARA VENDAS) - CORRIGIDO
 // ====================================
 elseif ($action === 'listar-lotes-ativos') {
     try {
@@ -205,6 +204,7 @@ elseif ($action === 'listar-lotes-ativos') {
                 l.id,
                 l.quantidade_disponivel,
                 l.preco_unitario,
+                CONCAT(tp.nome, ' - ', s.nome) as picole_nome,
                 tp.nome as tipo_nome,
                 s.nome as sabor_nome
             FROM lotes l

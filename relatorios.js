@@ -11,6 +11,7 @@ let chartEvolucaoVendas = null;
 // INICIALIZAÇÃO
 // ====================================
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("📊 Inicializando módulo de relatórios...");
   carregarFiltros();
   carregarRelatorios();
   configurarEventos();
@@ -29,14 +30,17 @@ async function carregarFiltros() {
     );
     const tipos = await response.json();
 
+    console.log("📋 Tipos de picolé carregados:", tipos);
+
     const filterTipo = document.getElementById("filter-tipo-picole");
     if (filterTipo) {
       filterTipo.innerHTML =
         '<option value="">Todos</option>' +
         tipos.map((t) => `<option value="${t.id}">${t.nome}</option>`).join("");
+      console.log(`✅ ${tipos.length} tipos carregados no filtro`);
     }
   } catch (error) {
-    console.error("Erro ao carregar filtros:", error);
+    console.error("❌ Erro ao carregar filtros:", error);
   }
 }
 
@@ -71,8 +75,7 @@ async function carregarRelatorios() {
   const mes = document.getElementById("filter-mes").value;
   const tipo = document.getElementById("filter-tipo-picole").value;
 
-  // Mostrar indicador de carregamento
-  console.log("📊 Carregando relatórios...");
+  console.log("📊 Carregando relatórios...", { ano, mes, tipo });
 
   await Promise.all([
     carregarResumoEstatistico(ano, mes),
@@ -99,7 +102,7 @@ async function carregarResumoEstatistico(ano, mes) {
     const data = await response.json();
 
     if (data.error) {
-      console.error("Erro:", data.error);
+      console.error("❌ Erro:", data.error);
       return;
     }
 
@@ -110,8 +113,10 @@ async function carregarResumoEstatistico(ano, mes) {
     document.getElementById("stat-notas").textContent = data.total_notas || 0;
     document.getElementById("stat-melhor-revendedor").textContent =
       data.melhor_revendedor || "N/A";
+
+    console.log("✅ Resumo estatístico carregado");
   } catch (error) {
-    console.error("Erro ao carregar resumo:", error);
+    console.error("❌ Erro ao carregar resumo:", error);
   }
 }
 
@@ -126,7 +131,7 @@ async function carregarVendasMensaisPorTipo(ano) {
     const dados = await response.json();
 
     if (dados.error) {
-      console.error("Erro:", dados.error);
+      console.error("❌ Erro:", dados.error);
       return;
     }
 
@@ -225,9 +230,10 @@ async function carregarVendasMensaisPorTipo(ano) {
           },
         },
       });
+      console.log("✅ Gráfico de vendas mensais criado");
     }
   } catch (error) {
-    console.error("Erro ao carregar vendas mensais:", error);
+    console.error("❌ Erro ao carregar vendas mensais:", error);
   }
 }
 
@@ -242,7 +248,7 @@ async function carregarTopRevendedores(ano, criterio) {
     const dados = await response.json();
 
     if (dados.error) {
-      console.error("Erro:", dados.error);
+      console.error("❌ Erro:", dados.error);
       return;
     }
 
@@ -311,9 +317,10 @@ async function carregarTopRevendedores(ano, criterio) {
           },
         },
       });
+      console.log("✅ Gráfico de top revendedores criado");
     }
   } catch (error) {
-    console.error("Erro ao carregar top revendedores:", error);
+    console.error("❌ Erro ao carregar top revendedores:", error);
   }
 }
 
@@ -329,7 +336,7 @@ async function carregarDistribuicaoTipos(ano, mes) {
     const dados = await response.json();
 
     if (dados.error) {
-      console.error("Erro:", dados.error);
+      console.error("❌ Erro:", dados.error);
       return;
     }
 
@@ -386,9 +393,10 @@ async function carregarDistribuicaoTipos(ano, mes) {
           },
         },
       });
+      console.log("✅ Gráfico de distribuição criado");
     }
   } catch (error) {
-    console.error("Erro ao carregar distribuição:", error);
+    console.error("❌ Erro ao carregar distribuição:", error);
   }
 }
 
@@ -403,7 +411,7 @@ async function carregarEvolucaoVendas() {
     const dados = await response.json();
 
     if (dados.error) {
-      console.error("Erro:", dados.error);
+      console.error("❌ Erro:", dados.error);
       return;
     }
 
@@ -476,9 +484,10 @@ async function carregarEvolucaoVendas() {
           },
         },
       });
+      console.log("✅ Gráfico de evolução criado");
     }
   } catch (error) {
-    console.error("Erro ao carregar evolução:", error);
+    console.error("❌ Erro ao carregar evolução:", error);
   }
 }
 
@@ -500,38 +509,39 @@ async function carregarDetalhamentoVendas(ano, mes, tipo) {
         tbody.innerHTML =
           '<tr><td colspan="6" class="text-center text-muted">Nenhum dado disponível</td></tr>';
       } else {
+        const meses = [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro",
+        ];
         tbody.innerHTML = dados
-          .map((d) => {
-            const meses = [
-              "Janeiro",
-              "Fevereiro",
-              "Março",
-              "Abril",
-              "Maio",
-              "Junho",
-              "Julho",
-              "Agosto",
-              "Setembro",
-              "Outubro",
-              "Novembro",
-              "Dezembro",
-            ];
-            return `
-            <tr>
-              <td>${d.ano}</td>
-              <td>${meses[d.mes - 1]}</td>
-              <td>${d.tipo_picole}</td>
-              <td>${d.total_notas}</td>
-              <td>${d.lotes_vendidos}</td>
-              <td>R$ ${parseFloat(d.valor_total).toFixed(2)}</td>
-            </tr>
-          `;
-          })
+          .map(
+            (d) => `
+          <tr>
+            <td>${d.ano}</td>
+            <td>${meses[d.mes - 1]}</td>
+            <td>${d.tipo_picole}</td>
+            <td>${d.total_notas}</td>
+            <td>${d.lotes_vendidos}</td>
+            <td>R$ ${parseFloat(d.valor_total).toFixed(2)}</td>
+          </tr>
+        `
+          )
           .join("");
       }
+      console.log("✅ Detalhamento carregado");
     }
   } catch (error) {
-    console.error("Erro ao carregar detalhamento:", error);
+    console.error("❌ Erro ao carregar detalhamento:", error);
   }
 }
 
@@ -566,9 +576,10 @@ async function carregarTopRevendedoresTabela(ano) {
           )
           .join("");
       }
+      console.log("✅ Top revendedores tabela carregada");
     }
   } catch (error) {
-    console.error("Erro ao carregar top revendedores tabela:", error);
+    console.error("❌ Erro ao carregar top revendedores tabela:", error);
   }
 }
 
@@ -579,12 +590,6 @@ function exportarParaExcel() {
   alert(
     "⚠️ Funcionalidade de exportação em desenvolvimento.\n\nEm breve você poderá exportar os relatórios para Excel!"
   );
-
-  // TODO: Implementar exportação real usando uma biblioteca como SheetJS
-  // Exemplo básico de como seria:
-  /*
-  const tabela = document.getElementById('table-detalhamento');
-  const wb = XLSX.utils.table_to_book(tabela);
-  XLSX.writeFile(wb, 'relatorio-vendas.xlsx');
-  */
 }
+
+console.log("✅ Módulo relatorios.js carregado completamente");

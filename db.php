@@ -1,7 +1,7 @@
 <?php
 // db.php
 $host = 'localhost';
-$db   = 'picole_factory';
+$db   = 'fabrica_picoles';
 $user = 'root';
 $pass = ''; // Altere se sua senha for diferente
 $charset = 'utf8mb4';

@@ -1,9 +1,8 @@
 // app.js - Sistema Principal Corrigido
 console.log("🚀 Sistema carregando...");
 
-// Configuração global
+// ⚠️ ÚNICA declaração de API_BASE (garantir window.API_BASE)
 window.API_BASE = window.API_BASE || "./";
-const API_BASE = window.API_BASE;
 
 // ===========================================
 // UTILITÁRIOS
@@ -16,6 +15,87 @@ function mostrarMensagem(mensagem, tipo = "info") {
 function tratarErroAPI(error, contexto = "") {
   console.error(`❌ Erro em ${contexto}:`, error);
   mostrarMensagem(`Erro ao ${contexto}: ${error.message}`, "error");
+}
+
+// ===========================================
+// CARREGADOR GENÉRICO DE SELECTS
+// ===========================================
+/**
+ * Popula um <select> a partir de um endpoint que retorna array de objetos.
+ * @param {string} endpoint - ex: "api_cadastros.php?action=listar-sabores"
+ * @param {string} selectId - id do <select> no DOM
+ * @param {string} valueKey - chave do objeto que será o value (ex: "id")
+ * @param {string} textKey - chave do objeto que será mostrado (ex: "nome")
+ * @param {Object} opts - { placeholderText, sortBy, emptyText }
+ */
+async function carregarSelect(
+  endpoint,
+  selectId,
+  valueKey = "id",
+  textKey = "nome",
+  opts = {}
+) {
+  const {
+    placeholderText = "Selecione...",
+    sortBy = null,
+    emptyText = "Nenhum registro encontrado",
+  } = opts;
+
+  const sel = document.getElementById(selectId);
+  if (!sel) {
+    console.warn(`⚠️ Select "${selectId}" não encontrado.`);
+    return;
+  }
+
+  console.log(`📥 Carregando select "${selectId}" de ${endpoint}`);
+
+  try {
+    const res = await fetch(window.API_BASE + endpoint);
+    const txt = await res.text();
+
+    let data;
+    try {
+      data = JSON.parse(txt);
+    } catch (e) {
+      console.error("❌ Resposta não é JSON válido:", txt);
+      sel.innerHTML = `<option value="">Erro ao carregar</option>`;
+      return;
+    }
+
+    // Suportar payloads { success: true, data: [...] }
+    if (!Array.isArray(data) && data && Array.isArray(data.data)) {
+      data = data.data;
+    }
+
+    if (!Array.isArray(data)) {
+      console.error("❌ Dados não são array:", data);
+      sel.innerHTML = `<option value="">${emptyText}</option>`;
+      return;
+    }
+
+    // Ordenar se solicitado
+    if (sortBy) {
+      data.sort((a, b) => ("" + a[sortBy]).localeCompare("" + b[sortBy]));
+    }
+
+    // Gerar options
+    const options = data
+      .map((item) => {
+        const v = item[valueKey] ?? "";
+        const t = item[textKey] ?? v;
+        return `<option value="${v}">${t}</option>`;
+      })
+      .join("");
+
+    sel.innerHTML =
+      `<option value="">${placeholderText}</option>` +
+      (options || `<option value="">${emptyText}</option>`);
+
+    console.log(`✅ Select "${selectId}" populado com ${data.length} items`);
+  } catch (err) {
+    console.error("❌ Erro ao carregar select:", err);
+    sel.innerHTML = `<option value="">Erro ao carregar</option>`;
+  }
 }
 
 // ===========================================
@@ -37,11 +117,9 @@ function inicializarAbas() {
       const targetTab = button.getAttribute("data-tab");
       console.log(`🔄 Mudando para aba: ${targetTab}`);
 
-      // Remover active de todos
       tabButtons.forEach((btn) => btn.classList.remove("active"));
       tabContents.forEach((content) => content.classList.remove("active"));
 
-      // Ativar selecionado
       button.classList.add("active");
       const targetContent = document.getElementById(`tab-${targetTab}`);
       if (targetContent) {
@@ -59,14 +137,12 @@ async function carregarDados(endpoint, elementoId, renderizarFn) {
 
   const elemento = document.getElementById(elementoId);
   if (!elemento) {
-    console.warn(
-      `⚠️ Elemento ${elementoId} não encontrado (página diferente?)`
-    );
+    console.warn(`⚠️ Elemento ${elementoId} não encontrado`);
     return;
   }
 
   try {
-    const response = await fetch(API_BASE + endpoint);
+    const response = await fetch(window.API_BASE + endpoint);
     const text = await response.text();
 
     console.log(`📦 Resposta de ${endpoint}:`, text.substring(0, 100));
@@ -110,13 +186,11 @@ async function carregarDados(endpoint, elementoId, renderizarFn) {
 function loadDynamicData() {
   console.log("🔄 Carregando dados dinâmicos...");
 
-  // Verificar se está na página de login - se sim, abortar
   if (document.getElementById("form-login")) {
     console.log("ℹ️ Página de login detectada - não carregando tabelas");
     return;
   }
 
-  // SABORES
   carregarDados(
     "api_cadastros.php?action=listar-sabores",
     "table-sabores",
@@ -133,7 +207,6 @@ function loadDynamicData() {
     `
   );
 
-  // INGREDIENTES
   carregarDados(
     "api_cadastros.php?action=listar-ingredientes",
     "table-ingredientes",
@@ -150,7 +223,6 @@ function loadDynamicData() {
     `
   );
 
-  // EMBALAGENS
   carregarDados(
     "api_cadastros.php?action=listar-embalagens",
     "table-embalagens",
@@ -167,7 +239,6 @@ function loadDynamicData() {
     `
   );
 
-  // TIPOS DE PICOLÉ
   carregarDados(
     "api_cadastros.php?action=listar-tipos",
     "table-tipos",
@@ -187,7 +258,6 @@ function loadDynamicData() {
     `
   );
 
-  // ADITIVOS
   carregarDados(
     "api_cadastros.php?action=listar-aditivos",
     "table-aditivos",
@@ -207,7 +277,6 @@ function loadDynamicData() {
     `
   );
 
-  // CONSERVANTES
   carregarDados(
     "api_cadastros.php?action=listar-conservantes",
     "table-conservantes",
@@ -227,7 +296,6 @@ function loadDynamicData() {
     `
   );
 
-  // REVENDEDORES
   carregarDados(
     "api_cadastros.php?action=listar-revendedores",
     "table-revendedores",
@@ -256,10 +324,8 @@ async function deletarItem(tipo, id) {
 
   try {
     const response = await fetch(
-      `${API_BASE}api_cadastros.php?action=deletar-${tipo}&id=${id}`,
-      {
-        method: "GET",
-      }
+      `${window.API_BASE}api_cadastros.php?action=deletar-${tipo}&id=${id}`,
+      { method: "GET" }
     );
 
     const text = await response.text();
@@ -302,11 +368,9 @@ function configurarFormulario(formId, endpoint, mensagemSucesso) {
     console.log("📦 Dados do formulário:", data);
 
     try {
-      const response = await fetch(API_BASE + endpoint, {
+      const response = await fetch(window.API_BASE + endpoint, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
@@ -319,16 +383,14 @@ function configurarFormulario(formId, endpoint, mensagemSucesso) {
         mostrarMensagem("✅ " + (result.message || mensagemSucesso), "success");
         form.reset();
 
-        // <--- ADICIONE ISSO: Redirecionamento
         if (result.redirect) {
           console.log(`🔄 Redirecionando para: ${result.redirect}`);
           setTimeout(() => {
             window.location.href = result.redirect;
-          }, 1000); // Delay de 1s para usuário ver mensagem
+          }, 1000);
         } else {
-          loadDynamicData(); // Recarregar dados se não houver redirect
+          loadDynamicData();
         }
-        // --------------------------------
       } else {
         mostrarMensagem("❌ " + result.message, "error");
       }
@@ -346,7 +408,6 @@ function setupForms() {
     "auth.php?action=login",
     "Login realizado!"
   );
-
   configurarFormulario(
     "form-sabor",
     "api_cadastros.php?action=salvar-sabor",
@@ -399,4 +460,4 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("🎉 Sistema inicializado com sucesso!");
 });
 
-console.log("📱 app.js carregado - API_BASE:", API_BASE);
+console.log("📱 app.js carregado - API_BASE:", window.API_BASE);

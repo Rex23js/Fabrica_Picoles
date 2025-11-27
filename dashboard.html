@@ -9,7 +9,7 @@
   <body class="page-app">
     <header class="topbar">
       <div class="topbar-content">
-        <h1 class="topbar-title">🍦 Fábrica de Picolés</h1>
+        <h1 class="topbar-title">🦴 Fábrica de Picolés</h1>
         <div class="topbar-actions">
           <span class="user-info" id="user-name">Usuário</span>
           <a href="index.html" class="btn btn-logout">Sair</a>
@@ -80,7 +80,7 @@
         <!-- Cards de Resumo -->
         <div class="dashboard-grid">
           <div class="stat-card">
-            <div class="stat-icon blue">🍦</div>
+            <div class="stat-icon blue">🦴</div>
             <div class="stat-content">
               <h3>Picolés Cadastrados</h3>
               <p class="stat-value" id="total-picoles">0</p>
@@ -156,120 +156,7 @@
       </main>
     </div>
 
-    <script>
-      // Carregar informações do usuário
-      document.addEventListener("DOMContentLoaded", () => {
-        const permissions = JSON.parse(
-          localStorage.getItem("userPermissions") || "[]"
-        );
-        const userName = localStorage.getItem("userName") || "Usuário";
-
-        // Atualizar boas-vindas
-        document.getElementById("welcome-user").textContent = userName;
-
-        // Mostrar botão de usuários se for admin
-        if (permissions.includes("admin")) {
-          document.getElementById("nav-usuarios").style.display = "flex";
-          document.getElementById("user-role-display").textContent =
-            "Administrador";
-          document.getElementById("info-role").textContent = "🔑 Administrador";
-        } else if (permissions.includes("producao")) {
-          document.getElementById("user-role-display").textContent =
-            "Equipe de Produção";
-          document.getElementById("info-role").textContent = "🏭 Produção";
-        } else if (permissions.includes("vendas")) {
-          document.getElementById("user-role-display").textContent =
-            "Equipe de Vendas";
-          document.getElementById("info-role").textContent = "💰 Vendas";
-        } else {
-          document.getElementById("user-role-display").textContent = "usuário";
-          document.getElementById("info-role").textContent =
-            "👤 Usuário Padrão";
-        }
-
-        // Mostrar permissões
-        const permissionBadges = permissions
-          .map((p) => {
-            const icons = {
-              admin: "🔑",
-              dashboard: "📊",
-              cadastros: "📝",
-              producao: "🏭",
-              vendas: "💰",
-              relatorios: "📈",
-            };
-            return `<span style="background: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 6px; font-size: 0.9rem; margin-right: 8px; display: inline-block; margin-bottom: 4px;">${
-              icons[p] || ""
-            } ${p}</span>`;
-          })
-          .join("");
-        document.getElementById("info-permissions").innerHTML =
-          permissionBadges;
-
-        // Carregar ações rápidas baseado nas permissões
-        const quickActionsGrid = document.getElementById("quick-actions-grid");
-        let actions = "";
-
-        if (permissions.includes("producao")) {
-          actions += `
-            <a href="producao.html" class="action-card">
-              <span class="action-icon">🍦</span>
-              <h4>Cadastrar Picolé</h4>
-              <p>Adicionar novo tipo de picolé</p>
-            </a>
-            <a href="producao.html#lotes" class="action-card">
-              <span class="action-icon">📦</span>
-              <h4>Criar Lote</h4>
-              <p>Registrar nova produção</p>
-            </a>
-          `;
-        }
-
-        if (permissions.includes("vendas")) {
-          actions += `
-            <a href="vendas.html" class="action-card">
-              <span class="action-icon">📄</span>
-              <h4>Emitir Nota Fiscal</h4>
-              <p>Nova venda para revendedor</p>
-            </a>
-          `;
-        }
-
-        if (permissions.includes("cadastros")) {
-          actions += `
-            <a href="cadastros.html" class="action-card">
-              <span class="action-icon">➕</span>
-              <h4>Cadastros Gerais</h4>
-              <p>Sabores, ingredientes, etc.</p>
-            </a>
-          `;
-        }
-
-        if (permissions.includes("relatorios")) {
-          actions += `
-            <a href="relatorios.html" class="action-card">
-              <span class="action-icon">📊</span>
-              <h4>Ver Relatórios</h4>
-              <p>Análises e estatísticas</p>
-            </a>
-          `;
-        }
-
-        if (permissions.includes("admin")) {
-          actions += `
-            <a href="usuarios.html" class="action-card">
-              <span class="action-icon">👥</span>
-              <h4>Gerenciar Usuários</h4>
-              <p>Criar e editar acessos</p>
-            </a>
-          `;
-        }
-
-        quickActionsGrid.innerHTML =
-          actions ||
-          '<p style="color: #94a3b8;">Você não tem ações rápidas disponíveis.</p>';
-      });
-    </script>
     <script src="app.js"></script>
+    <script src="dashboard.js"></script>
   </body>
 </html>
